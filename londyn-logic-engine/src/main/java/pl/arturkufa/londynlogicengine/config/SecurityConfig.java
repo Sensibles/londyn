@@ -14,6 +14,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import pl.arturkufa.londynsecurity.security.JwtAuthenticationFilter;
 import pl.arturkufa.londynsecurity.security.JwtAuthorizationFilter;
+import pl.arturkufa.londynsecurity.service.DatabseUserDetailsService;
 
 @EnableGlobalMethodSecurity(prePostEnabled =  false)
 @EnableWebSecurity

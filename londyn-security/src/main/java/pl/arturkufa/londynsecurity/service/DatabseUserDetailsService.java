@@ -1,4 +1,4 @@
-package pl.arturkufa.londynsocialengine.service;
+package pl.arturkufa.londynsecurity.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.AuthorityUtils;

@@ -26,9 +26,11 @@ import static pl.arturkufa.londynsecurity.security.SecurityConstants.*;
 
 public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
     private AuthenticationManager authenticationManager;
+    private SecurityConstants securityConstants;
 
-    public JwtAuthenticationFilter(AuthenticationManager authenticationManager) {
+    public JwtAuthenticationFilter(AuthenticationManager authenticationManager, SecurityConstants securityConstants) {
         this.authenticationManager = authenticationManager;
+        this.securityConstants = securityConstants;
     }
 
     @Override
@@ -46,11 +48,11 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                                             HttpServletResponse response,
                                             FilterChain chain,
                                             Authentication authResult) throws IOException, ServletException {
-        ZonedDateTime expirationTimeUTC = ZonedDateTime.now(ZoneOffset.UTC).plus(EXPIRATION_TIME, ChronoUnit.MILLIS);
+        ZonedDateTime expirationTimeUTC = ZonedDateTime.now(ZoneOffset.UTC).plus(securityConstants.getExpirationTime(), ChronoUnit.MILLIS);
         String token = Jwts.builder().setSubject(((UserDetails)authResult.getPrincipal()).getUsername())
                 .setExpiration(Date.from(expirationTimeUTC.toInstant()))
-                .signWith(SignatureAlgorithm.HS256, SECRET)
+                .signWith(SignatureAlgorithm.HS256, securityConstants.getSecret())
                 .compact();
-        response.addHeader(HEADER_STRING, TOKEN_PREFIX + token);
+        response.addHeader(securityConstants.getHeaderString(), securityConstants.getTokenPrefix() + token);
     }
 }

@@ -19,26 +19,23 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Objects;
 
-import static pl.arturkufa.londynsecurity.security.SecurityConstants.HEADER_STRING;
-import static pl.arturkufa.londynsecurity.security.SecurityConstants.SECRET;
-import static pl.arturkufa.londynsecurity.security.SecurityConstants.TOKEN_PREFIX;
-
 public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
 
     private UserDetailsService userDetailsService;
+    private SecurityConstants securityConstants;
 
-    public JwtAuthorizationFilter(AuthenticationManager authenticationManager, UserDetailsService userDetailsService) {
+    public JwtAuthorizationFilter(AuthenticationManager authenticationManager, UserDetailsService userDetailsService, SecurityConstants securityConstant) {
         super(authenticationManager);
         this.userDetailsService = userDetailsService;
-
+        this.securityConstants = securityConstant;
     }
 
     @Override
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,
                                     FilterChain chain) throws IOException, ServletException {
-        String header = request.getHeader(HEADER_STRING);
-        if(Objects.isNull(header) || !header.startsWith(TOKEN_PREFIX)){
+        String header = request.getHeader(securityConstants.getHeaderString());
+        if(Objects.isNull(header) || !header.startsWith(securityConstants.getTokenPrefix())){
             chain.doFilter(request, response);
             return;
         }
@@ -48,9 +45,9 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
     }
 
     private UsernamePasswordAuthenticationToken getAuthenticationToken(HttpServletRequest request) {
-        String token = request.getHeader(HEADER_STRING);
-        String username = Jwts.parser().setSigningKey(SECRET)
-                .parseClaimsJws(token.replace(TOKEN_PREFIX, ""))
+        String token = request.getHeader(securityConstants.getHeaderString());
+        String username = Jwts.parser().setSigningKey(securityConstants.getSecret())
+                .parseClaimsJws(token.replace(securityConstants.getTokenPrefix(), ""))
                 .getBody()
                 .getSubject();
         UserDetails userDetails = userDetailsService.loadUserByUsername(username);

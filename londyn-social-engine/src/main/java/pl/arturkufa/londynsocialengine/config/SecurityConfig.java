@@ -14,6 +14,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import pl.arturkufa.londynsecurity.security.JwtAuthenticationFilter;
 import pl.arturkufa.londynsecurity.security.JwtAuthorizationFilter;
+import pl.arturkufa.londynsecurity.security.SecurityConstants;
 
 @EnableGlobalMethodSecurity(prePostEnabled =  false)
 @EnableWebSecurity
@@ -22,9 +23,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
-
     @Autowired
-    UserDetailsService userDetailsService;
+    private UserDetailsService userDetailsService;
+    @Autowired
+    private SecurityConstants securityConstants;
 
     @Bean
     public PasswordEncoder getPasswordEncoder(){
@@ -37,8 +39,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.POST, "/login").permitAll()
                 .antMatchers("/hello").hasRole("USER")
                 .and()
-                .addFilter(new JwtAuthenticationFilter(authenticationManager()))
-                .addFilter(new JwtAuthorizationFilter(authenticationManager(), userDetailsService));
+                .addFilter(new JwtAuthenticationFilter(authenticationManager(), securityConstants))
+                .addFilter(new JwtAuthorizationFilter(authenticationManager(), userDetailsService, securityConstants));
         System.out.println("ENCODED PASSWORD: " + passwordEncoder.encode("password"));
 
     }

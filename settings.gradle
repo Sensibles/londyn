@@ -1,0 +1,2 @@
+rootProject.name = 'londyn'
+include 'londyn-main', 'londyn-logic-engine', 'londyn-social-engine', 'londyn-security'

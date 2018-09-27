@@ -1,0 +1,36 @@
+buildscript {
+    ext {
+        springBootVersion = '2.0.5.RELEASE'
+    }
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    }
+}
+
+
+ext.projectIds = ['group': 'pl.arturkufa', 'version': '0.0.1-SNAPSHOT',]
+group = projectIds.group
+version = projectIds.version
+ext.sCompatibility = 1.8
+
+allprojects{               
+    group = projectIds.group
+    version = projectIds.version
+}
+
+subprojects {                   
+    apply plugin: 'java'
+    apply plugin: 'eclipse'
+    apply plugin: 'org.springframework.boot'
+    apply plugin: 'io.spring.dependency-management'
+
+    sourceCompatibility = sCompatibility
+
+    repositories {
+        mavenCentral()
+    }
+
+}

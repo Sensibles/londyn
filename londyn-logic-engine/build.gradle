@@ -25,6 +25,7 @@ repositories {
 
 
 dependencies {
+	compile files('../libs/ojdbc6.jar')
 	compile project(':londyn-security')
 	compile('org.springframework.boot:spring-boot-starter-security')
 	compile('org.springframework.boot:spring-boot-starter-web')

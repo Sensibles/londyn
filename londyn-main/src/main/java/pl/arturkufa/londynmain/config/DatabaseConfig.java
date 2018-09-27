@@ -13,7 +13,7 @@ import javax.sql.DataSource;
 import java.sql.SQLException;
 
 @Configuration
-@MapperScan(value = {"pl.arturkufa.londynsecurity.model"}, sqlSessionFactoryRef="sqlSessionFactory")
+@MapperScan(value = {"pl.arturkufa.londynsecurity.model", "pl.arturkufa.londynmain.model"}, sqlSessionFactoryRef="sqlSessionFactory")
 public class DatabaseConfig {
 
     @Value("${db.user}")

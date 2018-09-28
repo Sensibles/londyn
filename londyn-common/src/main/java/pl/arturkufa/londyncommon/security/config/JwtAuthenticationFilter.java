@@ -1,4 +1,4 @@
-package pl.arturkufa.londynsecurity.security;
+package pl.arturkufa.londyncommon.security.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -10,7 +10,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import pl.arturkufa.londynsecurity.model.entity.User;
+import pl.arturkufa.londyncommon.security.model.entity.User;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -21,7 +21,6 @@ import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
-import static pl.arturkufa.londynsecurity.security.SecurityConstants.*;
 
 
 public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {

@@ -1,4 +1,4 @@
-package pl.arturkufa.londynsecurity.service;
+package pl.arturkufa.londyncommon.security.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.AuthorityUtils;
@@ -6,8 +6,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
-import pl.arturkufa.londynsecurity.model.entity.User;
-import pl.arturkufa.londynsecurity.model.mapper.UserMap;
+import pl.arturkufa.londyncommon.security.model.entity.User;
+import pl.arturkufa.londyncommon.security.model.mapper.UserMap;
 
 @Component
 public class DatabaseUserDetailsServiceImpl implements DatabaseUserDetailsService {

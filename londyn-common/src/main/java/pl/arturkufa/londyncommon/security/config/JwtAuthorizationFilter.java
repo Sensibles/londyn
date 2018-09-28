@@ -1,16 +1,13 @@
-package pl.arturkufa.londynsecurity.security;
+package pl.arturkufa.londyncommon.security.config;
 
 import io.jsonwebtoken.Jwts;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
-import pl.arturkufa.londynsecurity.model.entity.User;
-import pl.arturkufa.londynsecurity.service.DatabaseUserDetailsService;
+import pl.arturkufa.londyncommon.security.model.entity.User;
+import pl.arturkufa.londyncommon.security.service.DatabaseUserDetailsService;
 
 
 import javax.servlet.FilterChain;

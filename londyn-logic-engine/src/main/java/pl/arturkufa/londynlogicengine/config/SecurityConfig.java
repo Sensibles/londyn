@@ -9,13 +9,12 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import pl.arturkufa.londynsecurity.security.JwtAuthenticationFilter;
-import pl.arturkufa.londynsecurity.security.JwtAuthorizationFilter;
-import pl.arturkufa.londynsecurity.security.SecurityConstants;
-import pl.arturkufa.londynsecurity.service.DatabaseUserDetailsService;
+import pl.arturkufa.londyncommon.security.config.JwtAuthenticationFilter;
+import pl.arturkufa.londyncommon.security.config.JwtAuthorizationFilter;
+import pl.arturkufa.londyncommon.security.config.SecurityConstants;
+import pl.arturkufa.londyncommon.security.service.DatabaseUserDetailsService;
 
 @EnableGlobalMethodSecurity(prePostEnabled =  false)
 @EnableWebSecurity
@@ -38,7 +37,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.cors().and().csrf().disable().authorizeRequests()
                 .antMatchers(HttpMethod.POST, "/login").permitAll()
-                .antMatchers("/hello").hasRole("USER")
+                .antMatchers("/hello", "/sendKafkaMessage").hasRole("USER")
                 .and()
                 .addFilter(new JwtAuthenticationFilter(authenticationManager(), securityConstants))
                 .addFilter(new JwtAuthorizationFilter(authenticationManager(), userDetailsService, securityConstants));

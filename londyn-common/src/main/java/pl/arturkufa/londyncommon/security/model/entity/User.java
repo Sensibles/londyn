@@ -1,9 +1,7 @@
-package pl.arturkufa.londynsecurity.model.entity;
+package pl.arturkufa.londyncommon.security.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
-
-import java.math.BigDecimal;
 
 public class User {
     private String username;

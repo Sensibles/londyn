@@ -11,14 +11,14 @@ import java.util.List;
 
 public interface UserMap {
 
-    @Select("SELECT u.USERNAME, u.PASSWORD, u.ENABLED, r.ROLENAME " +
+    @Select("SELECT u.USERNAME as username, u.PASSWORD as password, u.ENABLED as enabled, r.ROLENAME as role " +
             "FROM USERS u " +
             "LEFT JOIN ROLES r ON u.ROLEID = r.ROLEID")
     @Results({
-            @Result(property = "username", column = "u.USERNAME"),
-            @Result(property = "password", column = "u.PASSWORD"),
-            @Result(property = "enabled", column = "u.ENABLED", javaType = java.lang.Boolean.class, typeHandler = org.apache.ibatis.type.BooleanTypeHandler.class),
-            @Result(property = "role", column = "r.ROLENAME")
+            @Result(property = "username", column = "username"),
+            @Result(property = "password", column = "password"),
+            @Result(property = "enabled", column = "enabled", javaType = java.lang.Boolean.class, typeHandler = org.apache.ibatis.type.BooleanTypeHandler.class),
+            @Result(property = "role", column = "role")
     })
     List<User> getAllUsers();
 

@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Objects;
 
 @Controller
 public class MainController {
@@ -29,7 +30,7 @@ public class MainController {
         Authentication auth = SecurityContextHolder
                 .getContext()
                 .getAuthentication();
-        if (auth != null) {
+        if (Objects.nonNull(auth)) {
             new SecurityContextLogoutHandler()
                     .logout(request, response, auth);
             request.getSession().invalidate();

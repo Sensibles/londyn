@@ -15,7 +15,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import pl.arturkufa.londynsecurity.security.JwtAuthenticationFilter;
 import pl.arturkufa.londynsecurity.security.JwtAuthorizationFilter;
 import pl.arturkufa.londynsecurity.security.SecurityConstants;
-import pl.arturkufa.londynsecurity.service.DatabseUserDetailsService;
+import pl.arturkufa.londynsecurity.service.DatabaseUserDetailsService;
 
 @EnableGlobalMethodSecurity(prePostEnabled =  false)
 @EnableWebSecurity
@@ -25,9 +25,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private PasswordEncoder passwordEncoder;
     @Autowired
-    UserDetailsService userDetailsService;
+    private DatabaseUserDetailsService userDetailsService;
     @Autowired
-    SecurityConstants securityConstants;
+    private SecurityConstants securityConstants;
 
     @Bean
     public PasswordEncoder getPasswordEncoder(){

@@ -4,12 +4,13 @@ import io.jsonwebtoken.Jwts;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
-import org.springframework.stereotype.Component;
-import pl.arturkufa.londynsecurity.model.ApplicationUser;
+import pl.arturkufa.londynsecurity.model.entity.User;
+import pl.arturkufa.londynsecurity.service.DatabaseUserDetailsService;
 
 
 import javax.servlet.FilterChain;
@@ -21,10 +22,10 @@ import java.util.Objects;
 
 public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
 
-    private UserDetailsService userDetailsService;
+    private DatabaseUserDetailsService userDetailsService;
     private SecurityConstants securityConstants;
 
-    public JwtAuthorizationFilter(AuthenticationManager authenticationManager, UserDetailsService userDetailsService, SecurityConstants securityConstant) {
+    public JwtAuthorizationFilter(AuthenticationManager authenticationManager, DatabaseUserDetailsService userDetailsService, SecurityConstants securityConstant) {
         super(authenticationManager);
         this.userDetailsService = userDetailsService;
         this.securityConstants = securityConstant;
@@ -50,11 +51,10 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
                 .parseClaimsJws(token.replace(securityConstants.getTokenPrefix(), ""))
                 .getBody()
                 .getSubject();
-        UserDetails userDetails = userDetailsService.loadUserByUsername(username);
-        //TODO FIX THIS WHEN SECURITY START WORKING. AVOID USING 'ApplicationUser', this class is not necessary.
-        ApplicationUser applicationUser = new ApplicationUser(userDetails.getUsername(), userDetails.getPassword());
+//        UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+        User user = userDetailsService.loadDatabaseUserByUsername(username);
         return username != null
-                ? new UsernamePasswordAuthenticationToken(applicationUser, null, userDetails.getAuthorities())
+                ? new UsernamePasswordAuthenticationToken(user, null, AuthorityUtils.createAuthorityList(user.getRole()))
                 : null;
     }
 }

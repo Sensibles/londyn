@@ -23,7 +23,7 @@ public class MainController {
     @PostMapping(value = "/sendKafkaMessage", consumes = "application/json", produces = "application/json")
     public TestMessage sendKafkaTest(@RequestBody TestMessage testMessage){
         try {
-            testMessageKafkaProducer.send("test-topic", testMessage);
+            testMessageKafkaProducer.send(testMessage);
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }

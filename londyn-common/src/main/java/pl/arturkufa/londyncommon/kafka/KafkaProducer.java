@@ -6,19 +6,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Component;
 
-@Component
 public class KafkaProducer<T> {
     private String topic;
 
     @Autowired
     private KafkaTemplate<String, String> kafkaTemplate;
-
     @Autowired
     private ObjectMapper objectMapper;
 
-    //todo temporary solution with this topic here
+    public KafkaProducer(String topic) {
+        this.topic = topic;
+    }
 
-    public void send(String topic, T message) throws JsonProcessingException {
+    public void send(T message) throws JsonProcessingException {
         String JSONMessage = objectMapper.writeValueAsString(message);
         kafkaTemplate.send(topic, JSONMessage);
         System.out.println("Sent sample message [" + message + "] to " + topic);

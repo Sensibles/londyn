@@ -1,0 +1,55 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Spring Boot WebSocket</title>
+
+</head>
+<body onload="connect()" onunload="disconnect()">
+<noscript><h2 style="color: #ff0000">Example of websocket</h2></noscript>
+<div>
+    <h3>Hello there, th:text="${username}"</h3>
+    <!--<div>-->
+        <!--<button id="connect" onclick="connect();">Connect</button>-->
+        <!--<button id="disconnect" disabled="disabled" onclick="disconnect();">Disconnect</button>-->
+    <!--</div>-->
+    <div id="conversationDiv">
+        <label>Conversation: </label>
+        <p id="response"></p>
+    </div>
+</div>
+<script th:src="@{sockjs.min.js}"></script>
+<script th:src="@{stomp.min.js}"></script>
+<script th:src="@{jquery.js}"></script>
+<script type="text/javascript">
+    var stompClient = null;
+    function setConnected(connected) {
+        <!--document.getElementById('connect').disabled = connected;-->
+        <!--document.getElementById('disconnect').disabled = !connected;-->
+        document.getElementById('conversationDiv').style.visibility = connected ? 'visible' : 'hidden';
+        $('#response').html();
+    }
+    function connect() {
+        var socket = new SockJS('/backendCommunication');
+        stompClient = Stomp.over(socket);
+        stompClient.connect({}, function (frame) {
+            setConnected(true);
+            console.log('Connected: ' + frame);
+            stompClient.subscribe('/topic/getResponse', function (respnose) {
+                showResponse(JSON.parse(respnose.body).responseMessage);
+            });
+        });
+    }
+    function disconnect() {
+        if (stompClient != null) {
+            stompClient.disconnect();
+        }
+        setConnected(false);
+        console.log("Disconnected");
+    }
+    function showResponse(message) {
+        var response = $("#response");
+        response.html(message);
+    }
+</script>
+</body>
+</html>

@@ -5,6 +5,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.security.core.userdetails.User;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -15,9 +17,12 @@ import java.util.Objects;
 public class MainController {
 
     @GetMapping("/hello")
-    @ResponseBody
-    public String testEndpoint(){
-        return "Hello, I'm Londyn main!";
+    public ModelAndView testEndpoint(){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentPrincipalName = authentication.getName();
+        ModelAndView modelAndView = new ModelAndView("hello");
+        modelAndView.addObject("username", currentPrincipalName);
+        return modelAndView;
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)

@@ -1,10 +1,10 @@
-package pl.arturkufa.londynsecurity.model.mapper;
+package pl.arturkufa.londyncommon.security.model.mapper;
 
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Result;
 import org.apache.ibatis.annotations.Results;
 import org.apache.ibatis.annotations.Select;
-import pl.arturkufa.londynsecurity.model.entity.User;
+import pl.arturkufa.londyncommon.security.model.entity.User;
 
 
 import java.util.List;

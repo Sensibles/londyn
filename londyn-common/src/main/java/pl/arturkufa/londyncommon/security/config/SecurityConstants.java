@@ -1,4 +1,4 @@
-package pl.arturkufa.londynsecurity.security;
+package pl.arturkufa.londyncommon.security.config;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;

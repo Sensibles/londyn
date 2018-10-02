@@ -11,10 +11,13 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 
 import javax.sql.DataSource;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.sql.SQLException;
+import java.util.Random;
 
 @Configuration
-@MapperScan(value = {"pl.arturkufa.londynsecurity.model.mapper"}, sqlSessionFactoryRef="sqlSessionFactory")
+@MapperScan(value = {"pl.arturkufa.londyncommon.security.model.mapper"}, sqlSessionFactoryRef="sqlSessionFactory")
 public class DatabaseConfig {
 
     @Value("${db.user}")
@@ -43,6 +46,10 @@ public class DatabaseConfig {
         dataSource.setPassword(dbPassword);
         dataSource.setDatabaseName(dbDatabase);
         dataSource.setServiceName("xe");
+       BigDecimal dupa =  BigDecimal.valueOf(3);
+       dupa.divide(dupa, RoundingMode.UNNECESSARY);
+
+
         return dataSource;
     }
 
@@ -53,4 +60,5 @@ public class DatabaseConfig {
         sessionFactory.setDataSource(dataSource());
         return sessionFactory.getObject();
     }
+
 }

@@ -25,10 +25,11 @@ repositories {
 
 
 dependencies {
-	compile project(':londyn-security')
+	compile project(':londyn-common')
 	compile files('../libs/ojdbc6.jar')
 	compile('org.springframework.boot:spring-boot-starter-security')
 	compile('org.springframework.boot:spring-boot-starter-web')
+	compile('org.springframework.kafka:spring-kafka')
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 	testCompile('org.springframework.security:spring-security-test')
 }
